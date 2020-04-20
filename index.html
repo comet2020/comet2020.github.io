@@ -4,202 +4,112 @@
     <meta charset="utf-8">
     <title>全球新冠肺炎疫情数据可视化</title>
     <!-- 引入 echarts.js -->
+    <link rel="stylesheet" href="css/index.css" />
+
+
+</head>
+<body>
+    <header>
+        <h1>疫情数据可视化</h1>
+        <div class="showTime">当前时间：2020年4月20-0时54分14秒</div>
+        <script>
+            var t = null;
+            t = setTimeout(time, 1000); //開始运行
+            function time() {
+                clearTimeout(t); //清除定时器
+                dt = new Date();
+                var y = dt.getFullYear();
+                var mt = dt.getMonth() + 1;
+                var day = dt.getDate();
+                var h = dt.getHours(); //获取时
+                var m = dt.getMinutes(); //获取分
+                var s = dt.getSeconds(); //获取秒
+                document.querySelector(".showTime").innerHTML =
+                    "当前时间：" +
+                    y +
+                    "年" +
+                    mt +
+                    "月" +
+                    day +
+                    "-" +
+                    h +
+                    "时" +
+                    m +
+                    "分" +
+                    s +
+                    "秒";
+                t = setTimeout(time, 1000); //设定定时器，循环运行
+            }
+        </script>
+    </header>
+
+    <section class="mainbox">
+        <div class="column">
+            <div class="no">
+                <div class="no-hd">
+                    <ul>
+                        <li>614842</li>
+                        <li>29424</li>
+                    </ul>
+                </div>
+                <div class="no-bd">
+                    <ul>
+                        <li>全球确诊人数</li>
+                        <li>全球死亡人数</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="bar3D">
+                <div class="chart"></div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="panel bar">
+                <h2>除中国外国家和地区 累积确诊和累积死亡人数</h2>
+                <div class="chart"></div>
+                <div class="panel-footer"></div>
+            </div>
+            <div class="panel bar2">
+                <h2>中国累积确诊和累积死亡人数</h2>
+                <div class="chart"></div>
+                <div class="panel-footer"></div>
+            </div>
+        </div>
+
+
+    </section>
+    <div id="text">
+        <p><img src="images\map.png" referrerpolicy="no-referrer" alt="image-20200420223827116" width="1000"></p>
+        <h1>全球各国新冠肺炎疫情发展趋势</h1>
+        <p>截止2020年3月29日，新冠肺炎累计确诊人数超过60万，其中海外现存确诊人数已经超过国内。新冠肺炎出现了明显的全球流行状态，甚至是大流行（Pandemic）。从已知的情况来看，当前国际疫情的传播有以下特点：</p>
+        <p>&nbsp;</p>
+        <h2>1.气候相关性</h2>
+        <p>&nbsp;</p>
+        <p>随时间推移，疫情向高海拔（伊朗）、高纬度地区（意大利、德国、法国、瑞士等）发展趋势明显。已有数据显示，新增确诊数量与地区气温因素存在相关性。气温较高的东南亚国家，如泰国、越南、菲律宾、柬埔寨、新加坡等，人口密度高且与中国交往密切，其经济水平、医疗防疫水平差距较大，但新冠肺炎危害程度较低。而韩国、日本和西欧国家在医疗水平、防疫措施较强的情况下，仍然出现了局部暴发。</p>
+        <p>&nbsp;</p>
+        <h2>2.人种无关性</h2>
+        <p>&nbsp;</p>
+        <p>在新冠肺炎疫情初期，有部分研究者认为新型冠状病毒更容易感染黄种人、东亚人口。但新的疫情传播情况打破了这一推测，各人种对新冠肺炎的易感性并无明显差别。</p>
+        <p>&nbsp;</p>
+        <h2>3.迅速挤占医疗资源</h2>
+        <p>&nbsp;</p>
+        <p>在我国医疗资源全力支援武汉的情况下，其局部暴发带来的医疗资源短缺依旧非常严重。新冠肺炎患者重症、危重症比例高，发生大流行状态下局部医疗能力无法有效应对。</p>
+        <p>&nbsp;</p>
+        <p>在新冠肺炎疫情期间，除湖北外的其他省级行政区，每日存量患者（当日住院接受治疗患者）峰值数字均在1000人以下。在疫情最为严峻的湖北，本省全部医师数与峰值住院人数的比值仅为1.4，如果没有全国支援则无法应对如此庞大的医疗任务。</p>
+        <p>&nbsp;</p>
+
+    </div>
+
+    <div class="flourish-embed flourish-bar-chart-race" data-src="visualisation/1780817" data-url="https://flo.uri.sh/visualisation/1780817/embed"><script src="https://public.flourish.studio/resources/embed.js"></script></div>
+    <div class="flourish-embed flourish-bar-chart-race" data-src="visualisation/1780730" data-url="https://flo.uri.sh/visualisation/1780730/embed"><script src="https://public.flourish.studio/resources/embed.js"></script></div>
+
+
     <script type="text/javascript" src="js/echarts.js"></script>
     <script type="text/javascript" src="js/jquery-3.5.0.js"></script>
     <script type="text/javascript" src="js/echarts-gl.js"></script>
-</head>
-<body>
-<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-<div id="main" style="width:100%;height:600px;"></div>
-<script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('main'));
-
-    // 指定图表的配置项和数据
-    var option = {
-        title: {text: '除中国外国家和地区 累积确诊和累积死亡人数'},
-        legend: {left: 'right'},
-        tooltip:{},
-        dataset:{
-            source:[
-                {"日期":"2020/3/3","累计确诊":10614,"累计死亡":164},
-                {"日期":"2020/3/4","累计确诊":12621,"累计死亡":218},
-                {"日期":"2020/3/5","累计确诊":14942,"累计死亡":268},
-                {"日期":"2020/3/6","累计确诊":18070,"累计死亡":341},
-                {"日期":"2020/3/7","累计确诊":21302,"累计死亡":418},
-                {"日期":"2020/3/8","累计确诊":24677,"累计死亡":502},
-                {"日期":"2020/3/9","累计确诊":28165,"累计死亡":706},
-                {"日期":"2020/3/10","累计确诊":32555,"累计死亡":878},
-                {"日期":"2020/3/11","累计确诊":37449,"累计死亡":1136},
-                {"日期":"2020/3/12","累计确诊":43787,"累计死亡":1456},
-                {"日期":"2020/3/13","累计确诊":52427,"累计死亡":1793},
-                {"日期":"2020/3/14","累计确诊":62422,"累计死亡":2226},
-                {"日期":"2020/3/15","累计确诊":73528,"累计死亡":2623},
-                {"日期":"2020/3/16","累计确诊":86485,"累计死亡":3287},
-                {"日期":"2020/3/17","累计确诊":100286,"累计死亡":3926},
-                {"日期":"2020/3/18","累计确诊":114963,"累计死亡":4675},
-                {"日期":"2020/3/19","累计确诊":134946,"累计死亡":5615},
-                {"日期":"2020/3/20","累计确诊":161783,"累计死亡":6672},
-                {"日期":"2020/3/21","累计确诊":192615,"累计死亡":7988},
-                {"日期":"2020/3/22","累计确诊":222707,"累计死亡":9629},
-                {"日期":"2020/3/23","累计确诊":254499,"累计死亡":11307},
-                {"日期":"2020/3/24","累计确诊":294736,"累计死亡":13012},
-                {"日期":"2020/3/25","累计确诊":337406,"累计死亡":15259},
-                {"日期":"2020/3/26","累计确诊":383722,"累计死亡":17656},
-                {"日期":"2020/3/27","累计确诊":444465,"累计死亡":20391},
-                {"日期":"2020/3/28","累计确诊":522343,"累计死亡":24531},
-                {"日期":"2020/3/29","累计确诊":579417,"累计死亡":27029}
-            ]
-        },
-        xAxis: {type: 'category'},
-        yAxis: {type: 'value'},
-        dataZoom: [
-            {
-                type: 'slider',
-                xAxisIndex: 0,
-                start: 0,
-                end: 100
-            },
-            {
-                type: 'slider',
-                yAxisIndex: 0,
-                start: 0,
-                end: 100
-            },
-        ],
-        series: [
-            {type: 'bar'},
-            {type: 'bar'},
-        ]
-    };
-
-    myChart.setOption(option);
-</script>
-
-<div id="chn" style="width:100%;height:600px;"></div>
-<script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('chn'));
-
-    // 指定图表的配置项和数据
-    var option = {
-        title: {text: '中国累积确诊和累积死亡人数'},
-        legend: {left: 'right'},
-        tooltip:{},
-        dataset:{
-            source:[
-                {"日期":"2020/3/3","确诊":80270,"死亡":2981},
-                {"日期":"2020/3/4","确诊":80409,"死亡":3012},
-                {"日期":"2020/3/5","确诊":80552,"死亡":3042},
-                {"日期":"2020/3/6","确诊":80651,"死亡":3070},
-                {"日期":"2020/3/7","确诊":80695,"死亡":3097},
-                {"日期":"2020/3/8","确诊":80735,"死亡":3119},
-                {"日期":"2020/3/9","确诊":80754,"死亡":3136},
-                {"日期":"2020/3/10","确诊":80778,"死亡":3158},
-                {"日期":"2020/3/11","确诊":80793,"死亡":3169},
-                {"日期":"2020/3/12","确诊":80813,"死亡":3176},
-                {"日期":"2020/3/13","确诊":80824,"死亡":3189},
-                {"日期":"2020/3/14","确诊":80844,"死亡":3199},
-                {"日期":"2020/3/15","确诊":80860,"死亡":3213},
-                {"日期":"2020/3/16","确诊":80881,"死亡":3226},
-                {"日期":"2020/3/17","确诊":80894,"死亡":3237},
-                {"日期":"2020/3/18","确诊":80928,"死亡":3245},
-                {"日期":"2020/3/19","确诊":80967,"死亡":3248},
-                {"日期":"2020/3/20","确诊":81008,"死亡":3255},
-                {"日期":"2020/3/21","确诊":81054,"死亡":3261},
-                {"日期":"2020/3/22","确诊":81093,"死亡":3270},
-                {"日期":"2020/3/23","确诊":81171,"死亡":3277},
-                {"日期":"2020/3/24","确诊":81218,"死亡":3281},
-                {"日期":"2020/3/25","确诊":81285,"死亡":3287},
-                {"日期":"2020/3/26","确诊":81340,"死亡":3292},
-                {"日期":"2020/3/27","确诊":81394,"死亡":3295},
-                {"日期":"2020/3/28","确诊":81439,"死亡":3300}
-            ]
-        },
-        xAxis: {type: 'category'},
-        yAxis: {type: 'value'},
-        dataZoom: [
-            {
-                type: 'slider',
-                xAxisIndex: 0,
-                start: 0,
-                end: 100
-            },
-            {
-                type: 'slider',
-                yAxisIndex: 0,
-                start: 0,
-                end: 100
-            },
-        ],
-        series: [
-            {type: 'bar'},
-            {type: 'bar'},
-        ]
-    };
-
-    myChart.setOption(option);
-</script>
-
-<div id="bar" style="width:100%;height:800px;"></div>
-<script type="text/javascript">
-    //基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('bar'),'light');
-    $.get('data/conv19.json', function (data) {
-        option = {
-            grid3D: {
-                boxWidth: 200,
-                boxDepth: 100
-            },
-            tooltip: {},
-            xAxis3D: {
-                name:'国家',
-                nameGap:30,
-                type: 'category',
-                axisLabel:{interval : '0'}
-            },
-            yAxis3D: {
-                name:'日期',
-                nameGap:30,
-                type: 'category',
-                axisLabel:{interval : 'auto'}
-            },
-            zAxis3D: {
-                name:'确诊人数',
-                nameGap:30
-            },
-            visualMap: {
-                max: 125000,
-                dimension: 'confirmed'
-            },
-            dataset: {
-                dimensions: [
-                    'confirmed',
-                    'dead',
-                    'country',
-                    {name: 'date', type: 'ordinal'}
-                ],
-                source: data
-            },
-            series: [
-                {
-                    type: 'bar3D',
-                    //symbolSize: symbolSize,
-                    shading: 'lambert',
-                    encode: {
-                        x: 'country',
-                        y: 'date',
-                        z: 'confirmed',
-                        tooltip: [0, 1, 2, 3]
-                    }
-                }
-            ]
-        };
-
-        myChart.setOption(option);
-    });
-</script>
-
-<div class="flourish-embed flourish-bar-chart-race" data-src="visualisation/1780817" data-url="https://flo.uri.sh/visualisation/1780817/embed"><script src="https://public.flourish.studio/resources/embed.js"></script></div>
-<div class="flourish-embed flourish-bar-chart-race" data-src="visualisation/1780730" data-url="https://flo.uri.sh/visualisation/1780730/embed"><script src="https://public.flourish.studio/resources/embed.js"></script></div>
+    <script type="text/javascript" src="js/flexible.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
 </body>
+
 </html>
 
